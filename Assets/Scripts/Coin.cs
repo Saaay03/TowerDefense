@@ -15,23 +15,23 @@ public class Coin : MonoBehaviour
     private Coroutine _appearCoroutine;
     private void OnEnable()
     {
-        _appearCoroutine = StartCoroutine(_appearCoroutine());
+        _appearCoroutine = StartCoroutine(Appear());
     }
-    privateIEnumerator Appear()
+    private IEnumerator Appear()
     {
         _animator.Play(_appearAnimationName);
-        yield return new WaitForSeconds(_secondToDisappear);
-        StartCoroutine(_disappearAnimationName());
+        yield return new WaitForSeconds(_secondsToDisappear);
+        StartCoroutine(Disappear());
     }
     public void Collect()
     {
-        _secondsToDisappear();
+        Stop();
         StartCoroutine(Disappear());
     }
     private IEnumerator Disappear()
     {
         _animator.Play(_disappearAnimationName);
-        yield return new WaitForSeconds(_appearAnimationName.GetCurrentAnimatorStateInfo(0).length);
+        yield return new WaitForSeconds(_animator.GetCurrentAnimatorStateInfo(0).length);
         gameObject.SetActive(false);
     }
     private void Stop()
